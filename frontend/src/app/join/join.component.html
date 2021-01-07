@@ -1,0 +1,34 @@
+<div id="join-area">
+  <header>
+    <h3>Join the conversation</h3>
+    <h2 *ngIf="isError==true">{{errorMessage}}</h2>
+  </header>
+  <section>
+    <form>
+      <input
+        type="text"
+        placeholder="Enter your username"
+        name="username"
+        id="username"
+        [(ngModel)]="username"
+      />
+      <input
+        type="password"
+        placeholder="Enter your Password"
+        name="username"
+        id="username"
+        [(ngModel)]="password"
+      />
+      <div>
+        <button [disabled]="submitDisabled" (click)="onLogin()">
+          {{ loginText }}
+          <span data-feather="arrow-right"></span>
+        </button>
+        <button [disabled]="submitDisabled" (click)="onRegister()">
+          {{ registerText }}
+          <span data-feather="arrow-right"></span>
+        </button>
+      </div>
+    </form>
+  </section>
+</div>
