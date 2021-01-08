@@ -9,17 +9,21 @@
   
       display: flex;
       flex-direction: column;
-      background-color: #f2f505;
+      background-color: #DEB887;
       header {
         display: flex;
         justify-content: space-between;
-        align-items: center;
+        align-items:flex-end;
         margin-bottom: 15px;
         padding: 10px 0 0;
+        margin-right: 15 px;
 
-        p {
-          font-size: 14px;
-          font-weight: 600;
+        h3 {
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          align-items: flex-end;
+        
         }
 
         img {
@@ -86,7 +90,7 @@
         background-color: rgb(222, 222, 240);
         box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
           0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  
+        
         form {
           display: flex;
           height: 100%;
@@ -98,7 +102,8 @@
             color: rgba(0, 0, 0, 0.5);
             font-size: 12px;
             font-weight: 500;
-            min-width: 65%;
+            min-width: 90%;
+            margin: 0 auto;
   
             &:focus {
               outline: none;

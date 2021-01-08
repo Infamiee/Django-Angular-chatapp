@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'chat',
     'corsheaders' 
 ]
-STREAM_API_KEY = 'qa7hw62sfajq'
-STREAM_API_SECRET = '6qjuche5fqmuqmre4g8bjbssadk6d7ygaznq5z2c974cqyfye5sa66vdjxa3w7rz'
+STREAM_API_KEY = 'vyap55sxvvug'
+STREAM_API_SECRET = '2dgwe8fnuphpcyvqqhyfnq2erx52k8kxh3c4e3n34e9sm9rzv5u6bhz8shfat7vt'
 SALT = '94Bd0XQS9YucOa8roMvYLGvkYks8M9'
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

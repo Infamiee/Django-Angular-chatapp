@@ -20,10 +20,10 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      margin-top: 15px;
+      
       input {
+        margin-top: 15px;
         display: flex;
-        
         background-color: rgb(222, 222, 240);
         color: rgba(0, 0, 0, 0.7);
         font-weight: 600;
@@ -38,7 +38,7 @@
       }
       div {
         display: flex;
-
+        margin-top: 15px;
         justify-content: center;
         button {
           box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -46,7 +46,7 @@
           display: flex;
           padding-right: 50px;
           align-items: center;
-          margin-top: 15px;
+          margin: 0 auto;
           border: none;
           background-color: #ec3062;
           color: white;
