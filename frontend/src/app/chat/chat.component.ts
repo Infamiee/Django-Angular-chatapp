@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { MessageResponse, Channel } from 'stream-chat';
-
+import { MessageResponse, Channel, UserFromToken } from 'stream-chat';
+import { HttpClient,HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { StreamService } from '../stream.service';
-import { StateService } from '../state.service';
+import { StateService, User } from '../state.service';
 
 declare const feather: any;
 
@@ -15,9 +15,10 @@ declare const feather: any;
 
 export class ChatComponent implements OnInit {
   constructor(
+    private http: HttpClient,
     public streamService: StreamService,
     private stateService: StateService,
-    private router: Router
+    private router: Router,
   ) {}
 
   messages: MessageResponse[] = [];
@@ -39,7 +40,7 @@ export class ChatComponent implements OnInit {
 
 
   getClasses(userId: string): { outgoing: boolean; incoming: boolean } {
-    const userIdMatches = userId ===  this.streamService.user.username;
+    const userIdMatches = userId ===  this.streamService.chat.username;
     return {
       outgoing: userIdMatches,
       incoming: !userIdMatches,
@@ -49,19 +50,27 @@ export class ChatComponent implements OnInit {
 
   async ngOnInit() {
     feather.replace();
-    if (this.stateService.user) {
+    
+    if (this.stateService.chatInfo) {
       this.channel = await this.streamService.initClient(
-        this.stateService.user
+        this.stateService.chatInfo
       );
       await this.channel.watch();
-      this.messages = this.channel.state.messages as any;
-      this.channel.on('message.new', (event) => {
-        this.messages = this.messages.concat(event.message);
-      });
-      this.username = this.stateService.user.username;
+        this.messages = this.channel.state.messages as any;
+        this.channel.on('message.new', (event) => {
+          this.messages = this.messages.concat(event.message);
+        });
+        this.username = this.stateService.chatInfo.username;
+      
     } else {
       this.router.navigate(['join']);
     }
     
   }
+  async setupChat(){
+    
+  }
+
+
+  
 }

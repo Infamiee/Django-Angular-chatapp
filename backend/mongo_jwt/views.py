@@ -71,7 +71,7 @@ def login(request):
                                         days=jwt_life)},
                                    jwt_secret, algorithm='HS256').decode('utf-8')
                 return Response(status=status.HTTP_200_OK,
-                                data={"data": {"token": token}})
+                                data={"data": {"token": token,"username":user['username']}})
             else:
                 return Response(status=status.HTTP_403_FORBIDDEN,
                                 data={"error_msg": messages.incorrect_password})
