@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
 import { StreamChat, Channel, ConnectAPIResponse } from 'stream-chat';
 
-declare interface Chat {
-  username:string
-  apiKey:string;
-  stream_token:string;
+declare interface UserInfo {
+  token: string;
+  apiKey: string;
+  username: string;
 }
-
 
 @Injectable({
   providedIn: 'root',
@@ -16,18 +15,17 @@ export class StreamService {
   constructor() {}
   streamClient: StreamChat;
   currentUser: ConnectAPIResponse;
-  chat: Chat;
+  user: UserInfo;
   
-  public async initClient(chat: Chat): Promise<Channel> {
-    this.chat=chat;
-    console.log(chat.apiKey)
-    this.streamClient = new StreamChat(chat.apiKey);
+  public async initClient(user: UserInfo): Promise<Channel> {
+    this.user=user;
+    this.streamClient = new StreamChat(user.apiKey);
     this.streamClient.connectUser(
       {
-        id: chat.username,
-        name: chat.username,
+        id: user.username,
+        name: user.username,
       },
-      chat.stream_token
+      user.token
     );
     return this.streamClient.channel('messaging', 'General');
   }

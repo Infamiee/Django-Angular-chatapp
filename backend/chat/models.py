@@ -1,7 +1,8 @@
-from mongoengine import Document, fields
 
-class User(Document):
-  id = fields.ObjectId()
-  _id = fields.StringField(required=True)
-  username = fields.StringField(required=True)
-  password = fields.StringField(required=True)
+from django.db import models
+
+class Member(models.Model):
+    username = models.CharField(max_length=100)
+    password = models.CharField(max_length=100)
+    def __str__(self):
+        return self.username.capitalize()
