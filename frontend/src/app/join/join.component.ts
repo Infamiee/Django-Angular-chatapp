@@ -112,16 +112,16 @@ export class JoinComponent implements OnInit {
     this.isError = true
   }
   public login(username: string,password:string){
-    return this.http.post('http://localhost:8000/auth/login', { username,password})
+    return this.http.post('http://backend:8000/auth/login', { username,password})
   }
   public register(username: string,password:string){
-    return this.http.post('http://localhost:8000/auth/signup', { username,password});
+    return this.http.post('http://backend:8000/auth/signup', { username,password});
   }
   public getToken(token:string){
     const requestOptions = {                                                                                                                                                                                 
      headers: new HttpHeaders({"Authorization":token}), 
    }; 
-   return this.http.get('http://localhost:8000/chat/token',requestOptions);
+   return this.http.get('http://backend:8000/chat/token',requestOptions);
  }
 
 
