@@ -11,26 +11,27 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+DEBUG = False
 
+ALLOWED_HOSTS = ['*']
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '7(=gip(l)k=ew=mj#q()k0**#tw%1id4=*u7))fw=wk2!_i8j!'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
-ALLOWED_HOSTS = []
+
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'rest_framework',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -38,11 +39,26 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'chat',
-    'corsheaders' 
+    'corsheaders',
+    'mongo_jwt'
 ]
-STREAM_API_KEY = 'vyap55sxvvug'
-STREAM_API_SECRET = '2dgwe8fnuphpcyvqqhyfnq2erx52k8kxh3c4e3n34e9sm9rzv5u6bhz8shfat7vt'
-SALT = '94Bd0XQS9YucOa8roMvYLGvkYks8M9'
+MONGODB_DATABASES = {
+    "default": {
+        "name": os.getenv('MONGO_URI'),
+        "tz_aware": True
+    }
+}
+
+MANGO_JWT_SETTINGS = {
+    "db_host": os.getenv('MONGO_URI'),
+    "db_name":"chatapp",
+    "fields": ("username", "password"),
+    "id_field":"username",
+    "auth_collection":"user"
+}
+STREAM_API_KEY = os.getenv('STREAM_API_KEY')
+STREAM_API_SECRET = os.getenv('STREAM_API_SECRET')
+JWT_SECRET = os.getenv('JWT_SECRET')
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -72,8 +88,6 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'chat_server.wsgi.application'
 
 
 # Database
