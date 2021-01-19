@@ -1,24 +1,19 @@
-# base image
-FROM node:12.2.0
-
-# install chrome for protractor tests
-RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -
-RUN sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list'
-RUN apt-get update && apt-get install -yq google-chrome-stable
-
-# set working directory
+#################
+# Build the app #
+#################
+FROM node:12-alpine as build
 WORKDIR /app
-
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
-
-# install and cache app dependencies
-COPY package.json /app/package.json
+COPY package.json package-lock.json ./
 RUN npm install
-RUN npm install -g @angular/cli@7.3.9
+COPY . .
+RUN npm install -g @angular/cli
+RUN ng build --configuration production --output-path=/dist
 
-# add app
-COPY . /app
+################
+# Run in NGINX #
+################
+FROM nginx:alpine
+COPY --from=build /dist /usr/share/nginx/html
 
-# start app
-CMD ng serve --host 0.0.0.0
+# When the container starts, replace the env.js with values from environment variables
+CMD ["/bin/sh",  "-c",  "envsubst < /usr/share/nginx/html/assets/env.template.js > /usr/share/nginx/html/assets/env.js && exec nginx -g 'daemon off;'"]

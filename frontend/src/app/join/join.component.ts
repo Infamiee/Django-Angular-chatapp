@@ -4,6 +4,7 @@ import { HttpClient,HttpErrorResponse,HttpHeaders } from '@angular/common/http';
 import { ChatInfo, StateService, User } from '../state.service';
 import { UserFromToken } from 'stream-chat';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 declare const feather: any;
 declare interface UserFromResponse {
   token: string;
@@ -25,7 +26,7 @@ export class JoinComponent implements OnInit {
     private router: Router
   ) {}
 
-  
+  apiURL = environment.apiUrl
   submitDisabled = false;
   username = '';
   password =''
@@ -112,16 +113,16 @@ export class JoinComponent implements OnInit {
     this.isError = true
   }
   public login(username: string,password:string){
-    return this.http.post('http://backend:8000/auth/login', { username,password})
+    return this.http.post(this.apiURL+'/auth/login', { username,password})
   }
   public register(username: string,password:string){
-    return this.http.post('http://backend:8000/auth/signup', { username,password});
+    return this.http.post(this.apiURL+'/auth/signup', { username,password});
   }
   public getToken(token:string){
     const requestOptions = {                                                                                                                                                                                 
      headers: new HttpHeaders({"Authorization":token}), 
    }; 
-   return this.http.get('http://backend:8000/chat/token',requestOptions);
+   return this.http.get(this.apiURL+'/chat/token',requestOptions);
  }
 
 
