@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: angular-chatapp-deploy
+  name: angular-chatapp-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: angular-chatapp-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: angular-chatapp-deploy
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/labproj15/angular_chatapp:1.2
+        name: angular-chatapp
+        envFrom:
+        - configMapRef:
+            name: angular-env
+        ports:
+        - containerPort: 80
+        resources: {}
+status: {}
