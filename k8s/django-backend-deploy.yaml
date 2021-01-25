@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: django-backend-deploy
+  name: django-backend-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: django-backend-deploy
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: django-backend-deploy
+    spec:
+      containers:
+      - image: image-registry.openshift-image-registry.svc:5000/labproj15/django_chatapp:1.4
+        name: django-chatapp-xtwmc
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - configMapRef:
+            name: django-env
+        - secretRef:
+            name: django-secrets
+        resources: {}
+        volumeMounts:
+        - mountPath: /db
+          name: cluster-volume
+      volumes:
+      - name: cluster-volume
+        persistentVolumeClaim:
+          claimName: django-db-pvc
+status: {}
